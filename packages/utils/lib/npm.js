@@ -44,13 +44,18 @@ function getVersions(npm, registry) {
 }
 
 // 根据指定 version 获取符合 semver 规范的最新版本号
-function getLatestSemverVersion(baseVersion, versions) {
-  versions = versions
-    .filter(function (version) { return semver.satisfies(version, "^" + baseVersion); })
-    .sort(function (a, b) {
-      return semver.gt(b, a);
-    });
-  return versions[0];
+function getLatestSemverVersion(baseVersion, versions = []) {
+  // versions = versions
+  //   .filter(function (version) { return semver.satisfies(version, "^" + baseVersion); })
+  //   .sort(function (a, b) {
+  //     return semver.gt(b, a);
+  //   });
+  if (versions.length > 1) {
+    return versions[versions.length - 1];
+  } else if (versions.length === 1) {
+    return versions[0];
+  }
+  return '';
 }
 
 // 根据指定 version 和包名获取符合 semver 规范的最新版本号
